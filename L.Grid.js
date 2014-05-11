@@ -60,8 +60,8 @@ L.Grid = L.GeoJSON.extend({
 			if (Math.abs(latLines[i]) > 90) {
 				continue;
 			}
-			grid.push(this._horizontalLine(latLines[i])); // in Graticule this data is put into geojson format, which is probably faster 
-			grid.push(this._label('lat', latLines[i]));  // simple call to line 168: axis, num 
+			grid.push(this._horizontalLine(latLines[i]));  
+			grid.push(this._label('lat', latLines[i]));   
 		}
 				
 		var lngLines = this._lngLines();
@@ -73,7 +73,7 @@ L.Grid = L.GeoJSON.extend({
 		this.eachLayer(this.removeLayer, this);
 
 		for (i in grid) {
-			this.addLayer(grid[i]);   // this where addData would go with a little adjustment to formating, but same info
+			this.addLayer(grid[i]);  
 		}
 		
 		return this;
@@ -83,7 +83,7 @@ L.Grid = L.GeoJSON.extend({
 		return this._lines(
 			this._bounds.getSouth(),
 			this._bounds.getNorth(),
-			this._map.getSize().y/this.options.tickRes, // maybe use getPixelBounds() and some fancy math to calc ticks according to map size
+			this._map.getSize().y/this.options.tickRes, // used to calculate ticks according to map pixel size 
 			this._containsEquator()
 		);
 	},
@@ -91,7 +91,7 @@ L.Grid = L.GeoJSON.extend({
 		return this._lines(
 			this._bounds.getWest(),
 			this._bounds.getEast(),
-			this._map.getSize().x/this.options.tickRes, // maybe use getPixelBounds() and some fancy math to calc ticks according to map size
+			this._map.getSize().x/this.options.tickRes, // used to caclulate ticks according to map pixel size
 			this._containsIRM()
 		);
 	},
@@ -117,9 +117,9 @@ L.Grid = L.GeoJSON.extend({
 		else {var interval = 20; }  
 
 		var tick = interval;
-		// next I need to round 'low' to be evenly divisable by 'tick' aka 'interval'
-		var low = Math.floor((low / tick) - (10)) * tick; // draw 2 extract graticules off the map, for overlap
-		var ticks = ticks + 20; // draw extract graticules, 2 before, 8 after the map bounds
+		// next we need to round 'low' to be evenly divisable by 'tick' aka 'interval'
+		var low = Math.floor((low / tick) - (10)) * tick; // draw 10 extract graticules off the map, for overlap
+		var ticks = ticks + 20; // draw extract graticules, 10 before, 10 after the map bounds
 		var lines = [];
 		for (var i = 1; i <= ticks; i++) {
 			lines.push(low + (i * tick)); 
@@ -151,7 +151,6 @@ L.Grid = L.GeoJSON.extend({
 	},
 
 
-												//////////////////////////////////////////
 	_label: function (axis, num) {   // axis is either the string 'lat' or 'lng', 
 		
 		var latlng;
