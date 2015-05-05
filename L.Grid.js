@@ -98,23 +98,24 @@ L.Grid = L.GeoJSON.extend({
 
 	_lines: function (low, high, ticks, containsZero) {
 		var delta = high - low;
-		if (Math.abs(1/3600*ticks - delta) < Math.abs(1/1800*ticks - delta)) { var interval = 1/3600; } // 1"
-		else if (Math.abs(1/1800*ticks - delta) < Math.abs(1/720*ticks - delta)) { var interval = 1/1800; }  // 2"
-		else if (Math.abs(1/720*ticks - delta) < Math.abs(1/360*ticks - delta)) { var interval = 1/720; }    // 5"
-		else if (Math.abs(1/360*ticks - delta) < Math.abs(1/180*ticks - delta)) { var interval = 1/360; }    // 10"
-		else if (Math.abs(1/180*ticks - delta) < Math.abs(1/120*ticks - delta)) { var interval = 1/180; }    // 20"
-		else if (Math.abs(1/120*ticks - delta) < Math.abs(1/60*ticks - delta)) { var interval = 1/120; }     // 30"
-		else if (Math.abs(1/60*ticks - delta) < Math.abs(1/30*ticks - delta)) { var interval = 1/60; }       // 1'
-		else if (Math.abs(1/30*ticks - delta) < Math.abs(1/12*ticks - delta)) { var interval = 1/30; }       // 2'
-		else if (Math.abs(1/12*ticks - delta) < Math.abs(1/6*ticks - delta)) { var interval = 1/12; }        // 5'
-		else if (Math.abs(1/6*ticks - delta) < Math.abs(1/3*ticks - delta)) { var interval = 1/6; }			 // 10'												
-		else if (Math.abs(1/3*ticks - delta) < Math.abs(1/2*ticks - delta)) { var interval = 1/3; }          // 20'
-		else if (Math.abs(1/2*ticks - delta) < Math.abs(ticks - delta)) { var interval = 1/2; }              // 30'
-		else if (Math.abs(ticks - delta) < Math.abs(2*ticks - delta)) { var interval = 1; }              // 1 deg
-		else if (Math.abs(2*ticks - delta) < Math.abs(5*ticks - delta)) { var interval = 2; }              
-		else if (Math.abs(5*ticks - delta) < Math.abs(10*ticks - delta)) { var interval = 5; }             
-		else if (Math.abs(10*ticks - delta) < Math.abs(20*ticks - delta)) { var interval = 10; }           
-		else {var interval = 20; }  
+		var interval;
+		if (Math.abs(1/3600*ticks - delta) < Math.abs(1/1800*ticks - delta)) { interval = 1/3600; } // 1"
+		else if (Math.abs(1/1800*ticks - delta) < Math.abs(1/720*ticks - delta)) { interval = 1/1800; }  // 2"
+		else if (Math.abs(1/720*ticks - delta) < Math.abs(1/360*ticks - delta)) { interval = 1/720; }    // 5"
+		else if (Math.abs(1/360*ticks - delta) < Math.abs(1/180*ticks - delta)) { interval = 1/360; }    // 10"
+		else if (Math.abs(1/180*ticks - delta) < Math.abs(1/120*ticks - delta)) { interval = 1/180; }    // 20"
+		else if (Math.abs(1/120*ticks - delta) < Math.abs(1/60*ticks - delta)) { interval = 1/120; }     // 30"
+		else if (Math.abs(1/60*ticks - delta) < Math.abs(1/30*ticks - delta)) { interval = 1/60; }       // 1'
+		else if (Math.abs(1/30*ticks - delta) < Math.abs(1/12*ticks - delta)) { interval = 1/30; }       // 2'
+		else if (Math.abs(1/12*ticks - delta) < Math.abs(1/6*ticks - delta)) { interval = 1/12; }        // 5'
+		else if (Math.abs(1/6*ticks - delta) < Math.abs(1/3*ticks - delta)) { interval = 1/6; }			 // 10'
+		else if (Math.abs(1/3*ticks - delta) < Math.abs(1/2*ticks - delta)) { interval = 1/3; }          // 20'
+		else if (Math.abs(1/2*ticks - delta) < Math.abs(ticks - delta)) { interval = 1/2; }              // 30'
+		else if (Math.abs(ticks - delta) < Math.abs(2*ticks - delta)) { interval = 1; }              // 1 deg
+		else if (Math.abs(2*ticks - delta) < Math.abs(5*ticks - delta)) { interval = 2; }
+		else if (Math.abs(5*ticks - delta) < Math.abs(10*ticks - delta)) { interval = 5; }
+		else if (Math.abs(10*ticks - delta) < Math.abs(20*ticks - delta)) { interval = 10; }
+		else { interval = 20; }
 
 		var tick = interval;
 		// next we need to round 'low' to be evenly divisable by 'tick' aka 'interval'
