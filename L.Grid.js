@@ -119,8 +119,8 @@ L.Grid = L.GeoJSON.extend({
 
 		var tick = interval;
 		// next we need to round 'low' to be evenly divisable by 'tick' aka 'interval'
-		var low = Math.floor((low / tick) - (10)) * tick; // draw 10 extract graticules off the map, for overlap
-		var ticks = ticks + 20; // draw extract graticules, 10 before, 10 after the map bounds
+		low = Math.floor((low / tick) - (10)) * tick; // draw 10 extract graticules off the map, for overlap
+		ticks = delta/interval + 20; // draw extract graticules, 10 before, 10 after the map bounds
 		var lines = [];
 		for (var i = 1; i <= ticks; i++) {
 			lines.push(low + (i * tick)); 
@@ -140,14 +140,14 @@ L.Grid = L.GeoJSON.extend({
 
 	_verticalLine: function (lng) {
 		return new L.Polyline([
-			[this._bounds.getNorth()*1.2, lng], // this creates overlap, helps when printing.
-			[this._bounds.getSouth()/2, lng]
+			[90, lng], // this creates overlap, helps when printing.
+			[-90, lng]
 		], this.options.lineStyle);
 	},
 	_horizontalLine: function (lat) {  // this makes a standard geojson LineString, I think
 		return new L.Polyline([
-			[lat, this._bounds.getWest()*1.2],
-			[lat, this._bounds.getEast()/2]
+			[lat, this._bounds.getWest()-180],
+			[lat, this._bounds.getEast()+180]
 		], this.options.lineStyle);
 	},
 
